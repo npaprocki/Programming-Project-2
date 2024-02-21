@@ -8,10 +8,6 @@
 public class Address implements Comparable<Address>
 {
 
-
-   
-
-
     //attributes of the address
     private String firstName;
     private String lastName;
@@ -163,7 +159,7 @@ public class Address implements Comparable<Address>
     @Override
     public String toString()
     {
-        return   firstName + " " + lastName + "\n" + streetAddress + "\n" + phoneNumber ;
+        return   firstName + " " + lastName + "\n" + streetAddress + "\n" + phoneNumber + "\n" + zipcode;
     }
 
 }
