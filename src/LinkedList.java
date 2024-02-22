@@ -1,17 +1,13 @@
-import java.util.NoSuchElementException;
 
 public class LinkedList<T> {
 
-	protected Node head;
-	protected Node tail;
-	protected int size;
-
-	// creating a node sets next to null
+	private Node<T> head;
+	private Node<T> tail;
+	private int size;
 
 	/*
 	 * Creates an empty list.
 	 */
-
 	public LinkedList() {
 
 	}
@@ -23,107 +19,38 @@ public class LinkedList<T> {
 	public String toString() {
 
 		if (isEmpty()) {
+
 			return "";
-		}
 
-		Node current = head;
-		StringBuilder output = new StringBuilder();
+		} else {
 
-		while (current != null) {
+			Node<T> current = head;
+			String returnString = "";
 
-			output.append(current.data + " ");
-			current = current.next;
+			while (current != null) {
 
-		}
+				returnString = returnString + "\n" + (current.data).toString();
 
-		return output.toString();
-	}
+				current = current.next;
 
-	/*
-	 * Returns the first item in the list. If the list is empty, throw a
-	 * NoSuchElementException.
-	 */
-	public int getFirst() {
-
-		try {
-
-			if (isEmpty()) {
-				throw new NoSuchElementException();
 			}
 
-		} catch (NoSuchElementException ex) {
-			ex.getMessage();
+			return returnString;
 		}
-
-		return head.data;
 	}
 
-	/*
-	 * Returns the last item in the list. If the list is empty, throw a
-	 * NoSuchElementException.
-	 */
-	public int getLast() {
+	public void insertFirst(T num) {
 
-		try {
-
-			if (isEmpty()) {
-				throw new NoSuchElementException();
-			}
-
-		} catch (NoSuchElementException ex) {
-			ex.getMessage();
-		}
-
-		Node current = head;
-
-		while (current.next != null) {
-			current = current.next;
-
-		}
-
-		return tail.data;
-
-	}
-
-	/*
-	 * Returns the item at the specified index. If the index is not valid, throw an
-	 * IndexOutOfBoundsException.
-	 */
-	public int getAt(int index) {
-
-		if (index < 0 || index > size) {
-
-			throw new IndexOutOfBoundsException();
-
-		}
-
-		Node current = head;
-
-		for (int x = 0; x != index; x++) {
-
-			current = current.next;
-
-		}
-
-		return current.data;
-	}
-
-	/*
-	 * Inserts an item at the beginning of the list.
-	 */
-	public void insertFirst(int num) {
-
+		// if list is empty, head and tail point to the same link
 		if (isEmpty()) {
-			Node newNode = new Node(num);
+			Node<T> newNode = new Node<T>(num);
 
 			head = newNode;
 			tail = newNode;
 
-			head.next = tail;
-
 		} else {
 
-			Node newNode = new Node(num);
+			Node<T> newNode = new Node<T>(num);
 
 			newNode.next = head;
 
@@ -131,67 +58,47 @@ public class LinkedList<T> {
 
 		}
 
-		tail.next = null;
-
 		size++;
+
 	}
 
-	/*
-	 * Inserts an item at the end of the list.
-	 */
+	public void insertLast(T num) {
 
+		// if list is empty, head and tail point to the same link
+		if (isEmpty()) {
+			Node<T> newNode = new Node<T>(num);
 
-	/*
-	 * Removes and returns the first element from the list. If the list is empty,
-	 * throw a NoSuchElementException.
-	 */
-	public int removeFirst() {
+			head = newNode;
+			tail = newNode;
 
-		try {
-
-			if (isEmpty()) {
-				throw new NoSuchElementException();
-			}
-
-		} catch (NoSuchElementException ex) {
-			ex.getMessage();
-		}
-
-		int oldData = head.data;
-
-		if (size == 1) {
-
-			head = null;
-			tail = null;
+			size++;
 
 		} else {
 
-			head.data = (head.next).data;
-			head.next = (head.next).next;
+			Node<T> newNode = new Node<T>(num);
+
+			Node<T> current = head;
+
+			while (current.next != null) {
+
+				current = current.next;
+
+			}
+
+			current.next = tail;
+			tail.next = newNode;
+			tail = newNode;
+
+			size++;
+
 		}
 
-		size--;
-
-		return oldData;
 	}
 
-	/*
-	 * Removes and returns the last element from the list. If the list is empty,
-	 * throw a NoSuchElementException.
-	 */
-
-
-	/*
-	 * Returns the number of elements in the list.
-	 */
 	public int getSize() {
-		
 		return size;
 	}
 
-	/*
-	 * Returns true if the list is empty, and false otherwise.
-	 */
 	public boolean isEmpty() {
 
 		if (size == 0) {
@@ -203,17 +110,24 @@ public class LinkedList<T> {
 		return false;
 	}
 
+	
+	public void mergeSort() {
+		
+		
+		
+	}
+	
+	
 	// A private Node class. By making it an inner class,
 	// the outer class can access it easily, but the client cannot.
-	private class Node<T> {
-		private int data;
-		private Node next;
+	private class Node<E> {
+		private E data;
+		private Node<E> next;
 
 		// Constructs a new node with the specified data
-		private Node(data) {
+		private Node(E data) {
 			this.data = data;
 			this.next = null;
 		}
 	}
-	
 }

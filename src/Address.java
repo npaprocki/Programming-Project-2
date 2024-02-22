@@ -159,7 +159,7 @@ public class Address implements Comparable<Address>
     @Override
     public String toString()
     {
-        return   firstName + " " + lastName + "\n" + streetAddress + "\n" + phoneNumber + "\n" + zipcode;
+        return   firstName + " " + lastName + "\n" + streetAddress + "\n" + phoneNumber + "\n";
     }
 
 }
