@@ -4,18 +4,9 @@ import java.util.Scanner;
 
 public class Driver {
 
-	public static void main(String[] args) {
-
-		LinkedList<Address> addressBook = new LinkedList<Address>();
-		readFile(addressBook);
-		System.out.println(addressBook.toString());
-
-	}
-
 	public static void readFile(LinkedList<Address> addressBook) {
 
 		try {
-			
 
 			Scanner input = new Scanner(new File("addresses.txt"));
 
@@ -33,13 +24,27 @@ public class Driver {
 
 				addressBook.insertLast(newAddress);
 
-
 			}
 
 		} catch (FileNotFoundException e) {
-			System.out.println("\nFile not found!");
-			e.printStackTrace();
+			System.out.println("\nFile not found!\n" + e.getMessage());
+
+			System.exit(0);
 		}
+
+	}
+
+	public static void main(String[] args) {
+
+		LinkedList<Address> addressBook = new LinkedList<Address>();
+		readFile(addressBook);
+
+		System.out.println("*** Unsorted List: ***");
+		System.out.println(addressBook.toString());
+		
+		addressBook.mergeSortStarter();
+		System.out.println("*** Sorted List: ***");
+		System.out.println(addressBook.toString());
 
 	}
 

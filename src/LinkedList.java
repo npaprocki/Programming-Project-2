@@ -110,14 +110,84 @@ public class LinkedList<T> {
 		return false;
 	}
 
-	
-	public void mergeSort() {
-		
-		
-		
+	public void mergeSortStarter() {
+		head = mergeSort(head);
 	}
+
 	
+	//parts of this method came from https://www.geeksforgeeks.org/merge-sort-for-linked-list/
+	private Node<T> mergeSort(Node<T> passedNode) {
+
+		if (passedNode == null || passedNode.next == null) {
+			return passedNode;
+		}
+
+		// Find middle node
+		Node<T> middle = getMiddle(passedNode);
+		Node<T> nextOfMiddle = middle.next;
+		middle.next = null;
+
+		// Apply mergeSort on left list
+		Node<T> left = mergeSort(passedNode);
+
+		// Apply mergeSort on right list
+		Node<T> right = mergeSort(nextOfMiddle);
+
+		// Merge the left and right lists
+		return sortedMerge(left, right);
+	}
+
 	
+	//parts of this method came from https://www.geeksforgeeks.org/merge-sort-for-linked-list/
+	@SuppressWarnings("unchecked")
+	private Node<T> sortedMerge(Node<T> a, Node<T> b) {
+		
+		Node<T> result = null;
+
+		if (a == null) {
+			return b;
+		}
+		
+		if (b == null) {
+			return a;
+		}
+
+		// Choose either a or b and recur
+		if (((Comparable<T>) a.data).compareTo(b.data) <= 0) {
+			
+			result = a;
+			result.next = sortedMerge(a.next, b);
+		
+		} else {
+			
+			result = b;
+			
+			result.next = sortedMerge(a, b.next);
+		}
+		
+		return result;
+	}
+
+	//parts of this method came from https://www.geeksforgeeks.org/merge-sort-for-linked-list/
+	private Node<T> getMiddle(Node<T> node) {
+		if (node == null) {
+			return node;
+		}
+
+		Node<T> slow = node;
+		Node<T> fast = node.next;
+
+		while (fast != null && fast.next != null) {
+		
+			slow = slow.next;
+		
+			fast = fast.next.next;
+		
+		}
+		
+		return slow;
+	}
+
 	// A private Node class. By making it an inner class,
 	// the outer class can access it easily, but the client cannot.
 	private class Node<E> {
