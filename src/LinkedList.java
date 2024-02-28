@@ -1,20 +1,31 @@
+/**
+ * Class: LinkedList
+ * 
+ * @author natepaprocki
+ * @version 1.0
+ * Course: CSE 274 - Spring 2024
+ * Written: March 3, 2024
+ * 
+ * Purpose: This generic class creates, modifies, and sorts a singly
+ *          linked list.
+ */
 
-public class LinkedList<T> {
+public class LinkedList<T extends Comparable<T>>  {
 
 	private Node<T> head;
 	private Node<T> tail;
 	private int size;
 
 	/*
-	 * Creates an empty list.
+	 * This constructor method creates an empty list.
 	 */
 	public LinkedList() {
 
 	}
 
 	/*
-	 * Returns a space-separated list of the elements in the list. If the list
-	 * contains no elements, return an empty string ""
+	 * This method returns a space-separated list of the elements in the list. If
+	 * the list contains no elements, return an empty string ""
 	 */
 	public String toString() {
 
@@ -39,6 +50,12 @@ public class LinkedList<T> {
 		}
 	}
 
+	/**
+	 * This method inserts a new object into front of Linked List.
+	 * 
+	 * @param num Object to be added
+	 */
+
 	public void insertFirst(T num) {
 
 		// if list is empty, head and tail point to the same link
@@ -61,6 +78,12 @@ public class LinkedList<T> {
 		size++;
 
 	}
+
+	/**
+	 * This method appends a new object to Linked List.
+	 * 
+	 * @param num Object to be added
+	 */
 
 	public void insertLast(T num) {
 
@@ -95,9 +118,21 @@ public class LinkedList<T> {
 
 	}
 
+	/**
+	 * This method returns the size of linked list.
+	 * 
+	 * @return size Size of the list
+	 */
+
 	public int getSize() {
 		return size;
 	}
+
+	/**
+	 * This method checks if the list is empty
+	 * 
+	 * @return true if list is empty and false otherwise
+	 */
 
 	public boolean isEmpty() {
 
@@ -110,12 +145,24 @@ public class LinkedList<T> {
 		return false;
 	}
 
-	public void mergeSortStarter() {
+	/**
+	 * This method calls the mergeSort methods
+	 */
+
+	public void sort() {
 		head = mergeSort(head);
 	}
 
-	
-	//parts of this method came from https://www.geeksforgeeks.org/merge-sort-for-linked-list/
+	/**
+	 * This method recursively sorts the linked list using merge sort
+	 * 
+	 * Note: This method is modified from code found at
+	 *       www.geeksforgeeks.org/merge-sort-for-linked-list/
+	 * 
+	 * @param passedNode The head node to be sorted
+	 * @return The head node of the sorted list
+	 */
+
 	private Node<T> mergeSort(Node<T> passedNode) {
 
 		if (passedNode == null || passedNode.next == null) {
@@ -127,48 +174,65 @@ public class LinkedList<T> {
 		Node<T> nextOfMiddle = middle.next;
 		middle.next = null;
 
-		// Apply mergeSort on left list
+		// Apply mergeSort on left list (i.e. passedNode to middle)
 		Node<T> left = mergeSort(passedNode);
 
-		// Apply mergeSort on right list
+		// Apply mergeSort on right list (i.e. middle.next to tail)
 		Node<T> right = mergeSort(nextOfMiddle);
 
 		// Merge the left and right lists
 		return sortedMerge(left, right);
 	}
 
-	
-	//parts of this method came from https://www.geeksforgeeks.org/merge-sort-for-linked-list/
-	@SuppressWarnings("unchecked")
+	/**
+	 * Merges two sorted linked list into a single list
+	 * 
+	 * Note: This method is modified from code found at
+	 * 		 www.geeksforgeeks.org/merge-sort-for-linked-list/
+	 * 
+	 * @param a The head of the first sorted linked list
+	 * @param b The head of the second sorted linked list
+	 * @return a or b The head of the merged sorted linked list
+	 */
+
 	private Node<T> sortedMerge(Node<T> a, Node<T> b) {
-		
+
 		Node<T> result = null;
 
 		if (a == null) {
 			return b;
 		}
-		
+
 		if (b == null) {
 			return a;
 		}
 
 		// Choose either a or b and recur
-		if (((Comparable<T>) a.data).compareTo(b.data) <= 0) {
-			
+		if ((a.data).compareTo(b.data) <= 0) {
+
 			result = a;
 			result.next = sortedMerge(a.next, b);
-		
+
 		} else {
-			
+
 			result = b;
-			
+
 			result.next = sortedMerge(a, b.next);
 		}
-		
+
 		return result;
 	}
 
-	//parts of this method came from https://www.geeksforgeeks.org/merge-sort-for-linked-list/
+	/**
+	 * This method gets the middle node of the linked list
+	 * 
+	 * Note: This method is modified from code found at
+	 * 		 www.geeksforgeeks.org/merge-sort-for-linked-list/
+	 * 
+	 * @param node The head node of the list
+	 * @return slow The middle node
+	 */
+	
 	private Node<T> getMiddle(Node<T> node) {
 		if (node == null) {
 			return node;
@@ -178,18 +242,16 @@ public class LinkedList<T> {
 		Node<T> fast = node.next;
 
 		while (fast != null && fast.next != null) {
-		
+
 			slow = slow.next;
-		
+
 			fast = fast.next.next;
-		
+
 		}
-		
+
 		return slow;
 	}
 
-	// A private Node class. By making it an inner class,
-	// the outer class can access it easily, but the client cannot.
 	private class Node<E> {
 		private E data;
 		private Node<E> next;
@@ -200,4 +262,5 @@ public class LinkedList<T> {
 			this.next = null;
 		}
 	}
+
 }
