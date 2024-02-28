@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 /**
  * Class: AddressBook
+ * 
  * @author natepaprocki
  * @version 1.0
  * Course: CSE 274 - Spring 2024

@@ -251,12 +251,28 @@ public class LinkedList<T extends Comparable<T>>  {
 
 		return slow;
 	}
+	
+	/**
+	 * Class: Node
+	 * 
+	 * @author natepaprocki and Dr. Johnson
+	 * @version 1.0
+	 * Course: CSE 274 - Spring 2024
+	 * Written: March 3, 2024
+	 * 
+	 * Purpose: This generic class creates a Node object with specified data.
+	 */
 
 	private class Node<E> {
 		private E data;
 		private Node<E> next;
+		
+		/**
+		 * This constructor constructs a new node with the specified data
+		 * 
+		 * @param data Passed data
+		 */
 
-		// Constructs a new node with the specified data
 		private Node(E data) {
 			this.data = data;
 			this.next = null;
